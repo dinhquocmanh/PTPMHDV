@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'book_manager.apps.BookManagerConfig',
+
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

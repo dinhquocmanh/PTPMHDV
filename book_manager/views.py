@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Book, Category
-from .serializers import BookSerializer, CategorySerializer
+from .models import Book, Category, User
+from .serializers import BookSerializer, CategorySerializer, UserSerizlizer
 from rest_framework import viewsets, permissions
 # Create your views here.
 # Create your views here.
@@ -20,3 +20,8 @@ class BookViewSet(viewsets.ModelViewSet):
     #         return [permissions.AllowAny()]
 
     #     return [permissions.IsAuthenticated()]
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects
+    serializer_class = UserSerizlizer

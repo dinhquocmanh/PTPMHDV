@@ -19,7 +19,7 @@ frontend sử dụng ReactJs để tương tác với BE
 
 # HDSD API
 - Open browser and redirect to http://localhost:8000/api
-- Api docs: //
+- Api docs: http://localhost:8000/swagger/
 
 
 
