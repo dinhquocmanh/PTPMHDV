@@ -8,10 +8,12 @@ import HomepageLayout from "./containers/Home";
 import BookList from "./containers/BookList";
 import AddBook from "./containers/AddBook";
 import EditBook from "./containers/EditBook";
+import ProductDetail from "./containers/ProductDetail";
 
 const BaseRouter = () => (
   <Hoc>
     <Route path="/addbook/" component={AddBook} />
+    <Route path="/productdetail/:bookID" component={ProductDetail} />
     <Route path="/editbook/:bookID" component={EditBook} />
     <Route path="/products" component={BookList} />
     <Route path="/login" component={Login} />

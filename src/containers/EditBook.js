@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import { deleteBookURL, updateBookURL, infoBookURL } from '../endpoints'
+import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -21,6 +20,7 @@ import {
     Select,
     Divider
 } from "semantic-ui-react";
+import { infoBookURL } from "../endpoints";
 
 const options = [
     { key: 'a', text: 'Trinh thám', value: 'tr' },
@@ -29,19 +29,27 @@ const options = [
     { key: 'd', text: 'Tiểu thuyết', value: 'novel' },
 ]
 
-class EditBook extends Component {
+class EditBook extends React.Component {
     state = {
-        data: null,
+        loading: false,
         error: null,
-        loading: false
+        formVisible: false,
+        data: [],
+        formData: {}
     };
 
     componentDidMount() {
-        this.handleFetchBook();
+        this.handleFetchItem();
     }
 
+    handleToggleForm = () => {
+        const { formVisible } = this.state;
+        this.setState({
+            formVisible: !formVisible
+        });
+    };
 
-    handleFetchBook = () => {
+    handleFetchItem = () => {
         const {
             match: { params }
         } = this.props;
@@ -50,32 +58,9 @@ class EditBook extends Component {
             .get(infoBookURL(params.bookID))
             .then(res => {
                 this.setState({ data: res.data, loading: false });
-
             })
             .catch(err => {
                 this.setState({ error: err, loading: false });
-            });
-    }
-
-    handleDeleteBook = itemID => {
-        axios
-            .delete(deleteBookURL(itemID))
-            .then(res => {
-                this.handleFetchBook();
-            })
-            .catch(err => {
-                this.setState({ error: err });
-            });
-    };
-
-    handleUpdateBook = itemID => {
-        axios
-            .put(updateBookURL(itemID))
-            .then(res => {
-                this.handleFetchBook();
-            })
-            .catch(err => {
-                this.setState({ error: err });
             });
     };
 
@@ -86,6 +71,7 @@ class EditBook extends Component {
         });
     };
 
+
     handleChange = (e, { name, value }) => {
         const { formData } = this.state;
         const updatedFormData = {
@@ -95,14 +81,27 @@ class EditBook extends Component {
         this.setState({ formData: updatedFormData });
     };
 
+    handleDeleteBook = () => {
+        const {
+            match: { params }
+        } = this.props;
+        this.setState({ loading: true });
+        axios
+            .delete(infoBookURL(params.bookID))
+            .then(res => {
+                this.setState({ data: res.data, loading: false });
+            })
+            .catch(err => {
+                this.setState({ error: err, loading: false });
+            });
+    };
+
+
     render() {
-        const { data, error, loading } = this.state;
+        const { data, error, formData, formVisible, loading } = this.state;
         const item = data;
-        console.log(data)
         return (
-
-            < Container >
-
+            <Container>
                 {error && (
                     <Message
                         error
@@ -110,69 +109,59 @@ class EditBook extends Component {
                         content={JSON.stringify(error)}
                     />
                 )}
-                {
-                    loading && (
-                        <Segment>
-                            <Dimmer active inverted>
-                                <Loader inverted>Loading</Loader>
-                            </Dimmer>
-                            <Image src="/images/wireframe/short-paragraph.png" />
-                        </Segment>
-                    )
-                }
+                {loading && (
+                    <Segment>
+                        <Dimmer active inverted>
+                            <Loader inverted>Loading</Loader>
+                        </Dimmer>
+                        <Image src="/images/wireframe/short-paragraph.png" />
+                    </Segment>
+                )}
 
-                {
-                    (!loading) && (
+                <Form style={{ margin: "5em 10em 10em", padding: "3em 0em" }}>
 
-                        <Form style={{ margin: "5em 10em 10em", padding: "3em 0em" }}>
+                    <Form.Input fluid label='Tên sách' placeholder='Tên sách' value={item.name} />
+                    <Form.Input fluid label='Tác giả' placeholder='Tác giả' value={item.author} />
+                    <Form.Input fluid label='Nhà xuất bản' placeholder='Nhà xuất bản' value={item.nhaxuatban} />
+                    <Form.Input fluid label='Năm xuất bản' placeholder='Năm xuất bản' value={item.namxuatban} />
 
-                            <Form.Input fluid label='Tên sách' placeholder='Tên sách' value={this.state.loading} />
-                            <Form.Input fluid label='Tác giả' placeholder='Tác giả' />
-                            <Form.Input fluid label='Nhà xuất bản' placeholder='Nhà xuất bản' />
-                            <Form.Input fluid label='Năm xuất bản' placeholder='Năm xuất bản' />
-                            <Form.Select
-                                fluid
-                                label='Thể loại'
-                                options={options}
-                                placeholder='Thể loại'
-                            />
-                            <Form.Group inline>
-                                <label>Trạng thái</label>
-                                <Form.Radio
-                                    label='Trong kho'
-                                    value='sm'
-                                />
-                                <Form.Radio
-                                    label='Đã cho mượn'
-                                    value='md'
-                                />
-                                <Form.Radio
-                                    label='Đã mất'
-                                    value='lg'
-                                />
-                            </Form.Group>
-                            <Form.TextArea label='Mô tả' placeholder='Mô tả...' />
+                    <Form.Select
+                        fluid
+                        label='Thể loại'
+                        options={options}
+                        placeholder='Thể loại'
+                    />
+                    <Form.Group inline>
+                        <label>Trạng thái</label>
+                        <Form.Radio
+                            label='Trong kho'
+                            value='sm'
+                        />
+                        <Form.Radio
+                            label='Đã cho mượn'
+                            value='md'
+                        />
+                        <Form.Radio
+                            label='Đã mất'
+                            value='lg'
+                        />
+                    </Form.Group>
+                    <Form.TextArea label='Mô tả' placeholder='Mô tả...' value={item.description} />
+                    <Button color='red' onClick={this.handleDeleteBook} >Xóa sách</Button>
+                    <Button color='yellow' onClick={this.handleUpdateBook}>Sửa sách</Button>
 
-                            <Button color='red'>Xóa sách</Button>
-                            <Button color='yellow'>Sửa sách</Button>
-                        </Form>
-                    )}
+                </Form>
 
-            </Container >
-
-        )
+            </Container>
+        );
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
 
-    };
-};
 
 export default withRouter(
     connect(
         null,
-        mapDispatchToProps
+
     )(EditBook)
 );

@@ -7,7 +7,7 @@ A. Giới thiệu
 - Framework sử dụng: Django Rest Framework (để xây dựng restful api), 
 REACTjs (để xây dựng frontend)
 
-- Github url: https://github.com/manh7aka/restapidemo
+- Github url: https://github.com/manh7aka/PTPMHDV
 
 - Thành viên: 
 	- Đinh Quốc Mạnh - MSV B18DCCN393 (100%)

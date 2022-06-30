@@ -14,7 +14,7 @@ import {
     Button
 } from "semantic-ui-react";
 import { bookListURL } from '../endpoints'
-
+import avatar from "../bookavatar.jpg"
 
 class BookList extends React.Component {
 
@@ -66,7 +66,8 @@ class BookList extends React.Component {
                     {data.map(item => {
                         return (
                             <Item key={item.id}>
-                                <Item.Image src="/images/bookavatar.jpg" />
+
+                                <Item.Image src={avatar} />
                                 <Item.Content>
                                     <Item.Header>
                                         {item.name}
