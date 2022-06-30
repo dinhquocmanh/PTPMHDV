@@ -1,0 +1,35 @@
+Báo cáo môn Phát triển PM hướng dịch vụ
+Nhóm 20. SOA_2022_03
+
+A. Giới thiệu
+- Tên đề tài: Xây dựng api quản lý sách trong thư viện
+
+- Framework sử dụng: Django Rest Framework (để xây dựng restful api), 
+REACTjs (để xây dựng frontend)
+
+- Github url: https://github.com/manh7aka/restapidemo
+
+- Thành viên: 
+	- Đinh Quốc Mạnh - MSV B18DCCN393 (100%)
+	- 2 bạn còn lại trong nhóm em không liên lạc được 
+	từ lâu (hình như ko đi học).
+
+- Thực thi/ cài đặt: Trong file readme.md github
+
+- Phiên bản:
+    + V1.0: Implement api thêm sửa xóa sách và Category cơ bản
+    Demo chạy trên online hosting: HDSD trong file readme.md
+    Phân quyền cho admin (Full quyền) và Guest (Chỉ xem).
+
+    + V1.5(mới nhất): 	
+    Implement restful api design pattern: Front end sử dụng ReactJs, Backend sử dụng DjangoRestFramework để tạo restful api
+    Thêm tính năng đăng nhập đăng kí cho người dùng
+    Thêm sửa xóa, update khóa học trên frontend cho người dùng
+    Tài liệu hướng dẫn sử dụng api đầy đủ (Swagger)
+
+		
+B. Phân tích thiết kế:
+Do nhóm em chỉ có một mình em nên chưa chuẩn bị được tài liệu & hình vẽ
+
+
+
