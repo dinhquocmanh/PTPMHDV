@@ -22,4 +22,5 @@ frontend sử dụng ReactJs để tương tác với BE
 - Api docs: http://localhost:8000/swagger/
 
 
-
+# Tài liệu:
+https://docs.google.com/document/d/1cqExcSPcsXohlQDxpTgE1t7rQDn4OV9g_VqDUAaG5iQ/edit
